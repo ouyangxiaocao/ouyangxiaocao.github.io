@@ -1,0 +1,67 @@
+---
+layout: archive
+title: "Publications"
+permalink: /publications/
+author_profile: true
+---
+
+{% if site.author.googlescholar %}
+  <div class="wordwrap">You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.</div>
+{% endif %}
+
+{% include base_path %}
+
+<!-- New style rendering if publication categories are defined -->
+{% if site.publication_category %}
+  <div class="publication-tabs">
+    <div class="publication-tabs__nav" role="tablist">
+      {% assign first_tab = true %}
+      {% for category in site.publication_category %}
+        {% assign cat_posts = site.publications | where: "category", category[0] %}
+        {% if cat_posts.size > 0 %}
+          <button type="button" class="publication-tabs__label{% if first_tab %} is-active{% endif %}" data-tab="{{ category[0] }}" role="tab" aria-selected="{% if first_tab %}true{% else %}false{% endif %}">{{ category[1].title }}</button>
+          {% assign first_tab = false %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% assign first_panel = true %}
+    {% for category in site.publication_category %}
+      {% assign cat_posts = site.publications | where: "category", category[0] | reverse %}
+      {% if cat_posts.size > 0 %}
+        <div class="publication-tabs__panel{% if first_panel %} is-active{% endif %}" data-tab-panel="{{ category[0] }}" role="tabpanel">
+          {% for post in cat_posts %}
+            {% include archive-single.html %}
+          {% endfor %}
+        </div>
+        {% assign first_panel = false %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <script>
+    (function () {
+      var tabs = document.querySelectorAll(".publication-tabs__label");
+      var panels = document.querySelectorAll(".publication-tabs__panel");
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          var target = tab.getAttribute("data-tab");
+          tabs.forEach(function (t) {
+            t.classList.toggle("is-active", t === tab);
+            t.setAttribute("aria-selected", t === tab ? "true" : "false");
+          });
+          panels.forEach(function (p) {
+            p.classList.toggle("is-active", p.getAttribute("data-tab-panel") === target);
+          });
+        });
+      });
+    })();
+  </script>
+{% else %}
+  {% for post in site.publications reversed %}
+    {% include archive-single.html %}
+  {% endfor %}
+{% endif %}
+
+
+
