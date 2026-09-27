@@ -21,7 +21,7 @@ News
 ======
 - Several openings for master students. Drop me an email if this interests you. E-mail: oyxiaocao@swufe.edu.cn.
 
-- 2026.06: Two papers are accepted by KDD 2026.
+- 2026.06: Two papers have been accepted by KDD 2026.
 
 Selected Publications
 ======
